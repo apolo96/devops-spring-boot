@@ -28,12 +28,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @DirtiesContext
 public class HelloWorldConfigurationTests {
-
+	
 	@LocalServerPort
 	private int port;
 
@@ -47,4 +48,10 @@ public class HelloWorldConfigurationTests {
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 	}
 
+	@Test
+	public void greetingShouldReturnDefaultMessage() throws Exception {
+		String expected = "apolo96";
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/?name="+expected,
+				String.class)).contains(String.format("Hello %s - Spring Boot",expected));
+	}
 }
