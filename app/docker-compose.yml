@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+  app:
+    image: apolo96/hello-spring-boot
+    container_name: hello-spring-boot
+    ports:
+      - 80:8080
+    networks:
+      - spring-boot
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    user: root
+    ports:
+      - 8080:8080
+      - 50000:50000 
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - jenkinsdata:/var/jenkins_home
+
+networks: 
+  spring-boot:
+    driver: bridge
+
+volumes: 
+  jenkinsdata:
+    driver: local
