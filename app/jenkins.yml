@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+
+  docker-dind:
+    image: docker:dind
+    container_name: docker-dind
+    user: root
+    privileged: true
+    networks:
+      jenkinsnet:
+        aliases:
+          - docker   
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkinsdata:/var/jenkins_home
+    ports:
+      - 2376:2376
+
+  jenkins:
+    image: jenkinsci/blueocean
+    container_name: jenkins
+    depends_on:
+      - docker-dind
+    user: root
+    environment:
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+    ports:
+      - 80:8080
+      - 50000:50000 
+    volumes: 
+      - jenkinsdata:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
+    networks:
+      - jenkinsnet
+
+volumes: 
+  jenkinsdata:
+    driver: local
+  jenkins-docker-certs:
+    driver: local
+
+
+networks:
+  jenkinsnet:
+    driver: bridge
