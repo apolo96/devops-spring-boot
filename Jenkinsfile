@@ -3,15 +3,9 @@ pipeline {
     stages {
         stage('Test') {            
             steps {
-                step{
-                    echo 'Testing...'
-                    sh 'cd app/ && mvn test'
-                }
-                
-                step{
-                    sh "printenv"
-                }
-                
+                echo 'Testing...'
+                sh 'cd app/ && mvn test'
+                sh "printenv"               
             }
         }
     }
