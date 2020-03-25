@@ -5,6 +5,7 @@ pipeline {
             steps {
                 echo 'Testing...'
                 sh 'cd app/ && mvn test'
+                sh "printenv"               
             }
         }
     }
