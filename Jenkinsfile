@@ -4,7 +4,9 @@ pipeline {
         stage('Test') {            
             steps {
                 echo 'Testing...'
-                sh 'cd app/ && mvn test'
+                dir('app'){
+                    sh 'mvn test'
+                }
                 sh "printenv"               
             }
         }
