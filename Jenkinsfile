@@ -61,5 +61,14 @@ pipeline {
             }
         }
         
+        stage('Request Release'){
+            when{
+                expression { BRANCH_NAME ==~ /^[Rr]elease\/.*$/ }
+            }
+            steps{
+                echo "New release avalide"
+            }
+        }
+        
     }
 }
