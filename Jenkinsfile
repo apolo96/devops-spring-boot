@@ -8,14 +8,14 @@ pipeline {
                 sh "printenv"               
             }
         }
-        tage('Coverage') {            
+        stage('Coverage') {            
             steps {
                 echo 'Testing...'
                 sh 'exit 1'
                 sh "printenv"               
             }
         }
-        tage('Reporting') {            
+        stage('Reporting') {            
             steps {
                 echo 'Testing...'
                 sh 'exit 0'
