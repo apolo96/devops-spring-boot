@@ -4,7 +4,21 @@ pipeline {
         stage('Test') {            
             steps {
                 echo 'Testing...'
-                sh 'cd app/ && mvn test'
+                sh 'exit 0'
+                sh "printenv"               
+            }
+        }
+        tage('Coverage') {            
+            steps {
+                echo 'Testing...'
+                sh 'exit 1'
+                sh "printenv"               
+            }
+        }
+        tage('Reporting') {            
+            steps {
+                echo 'Testing...'
+                sh 'exit 0'
                 sh "printenv"               
             }
         }
